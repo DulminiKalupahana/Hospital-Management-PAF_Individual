@@ -4,7 +4,8 @@ import java.sql.*;
 
 public class Hospital {
 
-	private Connection connect()  {   
+	private Connection connect() 
+	{   
 		
 		Connection con = null; 
 	 
@@ -15,10 +16,13 @@ public class Hospital {
 		  System.out.print("Successfully connected");
 	  }   
 	  catch (Exception e)   
-	  {e.printStackTrace();} 
+	  {
+		  e.printStackTrace();
+	  } 
 	 
 	  return con;  
-	  } 
+	  
+	} 
 	
 	public String insertHosDetails(String hosname, String address, String contactno, String email) 
 	{   
@@ -46,13 +50,16 @@ public class Hospital {
 	      preparedStmt.execute();    
 	      con.close(); 
 	 
-	   output = "Inserted successfully";   
+	      String newHosDetails = readHosDetails();    
+	      output = "{\"status\":\"success\", \"data\": \"" +       
+	    		  newHosDetails + "\"}";
 	   
 	  }catch (Exception e)   
 	  	
 	 	{    
-		   output = "Error while inserting the Details";    
-		   System.err.println(e.getMessage());   
+		  output = "{\"status\":\"error\", \"data\":"
+		  		+ "\"Error while inserting the hospital details.\"}";    
+		  System.err.println(e.getMessage());  
 		} 
 	 return output;  
 	}
@@ -103,13 +110,8 @@ public String readHosDetails()
 	         output += "<td>" + hosEmail + "</td>"; 
 	 
 	         //button
-	         output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btnUpdate btn btn-secondary\"></td>"      
-	         				+ "<td><form method=\"post\" action=\"hospital.jsp\">"      
-	         				+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"      
-	         				+ "<input name=\"hidHospIDDelete\" type=\"hidden\" value=\"" + hosID      
-	         				+ "\">" + "</form></td></tr>"; 
-	         
-	         output += "<td><input name='btnUpdate' type='button' value='Update' "
+	       
+	          output += "<td><input name='btnUpdate' type='button' value='Update' "
 	         		+ "class='btnUpdate btn btn-secondary'></td>"
 	         		+ "<td><input name='btnRemove' type='button'"
 	         		+ "value='Remove'"
@@ -157,11 +159,14 @@ public String readHosDetails()
 	   preparedStmt.execute();   
 	   con.close(); 
 	 
-	   output = "Updated successfully";   
+	   String newHosDetails = readHosDetails();    
+	   output = "{\"status\":\"success\", \"data\": \"" +        
+	   newHosDetails + "\"}";  
 	}   
 		catch (Exception e)   
 	{    
-			output = "Error while updating the Details.";    
+			output = "{\"status\":\"error\", \"data\":"
+					+ " \"Error while updating the hospital details.\"}";    
 			System.err.println(e.getMessage());   
 			
 	} 
@@ -191,13 +196,17 @@ public String readHosDetails()
 	   preparedStmt.execute();    
 	   con.close(); 
 	 
-	   output = "Deleted successfully"; 
+	   String newHosDetails = readHosDetails();    
+	   output = "{\"status\":\"success\", \"data\": \"" +        
+			   newHosDetails + "\"}";
 	   
 	  }   
 	  catch (Exception e)   
 	  {    
-		  output = "Error while deleting the Details.";    
-		  System.err.println(e.getMessage());   } 
+		  output = "{\"status\":\"error\", \"data\":"
+		  		+ " \"Error while deleting the hospital details.\"}";    
+		  System.err.println(e.getMessage());  
+	  } 
 	 
 	  return output;  }
 	
