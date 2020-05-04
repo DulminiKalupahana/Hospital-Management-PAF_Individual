@@ -72,11 +72,17 @@ public String readHosDetails()
 			} 
 			
 	 
-	     output = "<table border=\"1\"><tr><th>Hospital Name</th><th>Address</th><th>Contact No</th><th>Email</th><th>Update</th><th>Remove</th></tr>"; 
+	     output = "<table border=\"1\"><tr>"
+	     		+ "<th>Hospital Name</th>"
+	     		+ "<th>Address</th>"
+	     		+ "<th>Contact No</th>"
+	     		+ "<th>Email</th>"
+	     		+ "<th>Update</th>"
+	     		+ "<th>Remove</th></tr>"; 
 	 
 	   
 	     String query = "select * from hospitaldetails";    
-	     Statement stmt = con.createStatement();    
+	     java.sql.Statement stmt = con.createStatement();    
 	     ResultSet rs = stmt.executeQuery(query); 
 	 
 	     while (rs.next())    
@@ -95,7 +101,7 @@ public String readHosDetails()
 	         output += "<td>" + hosContactno + "</td>";     
 	         output += "<td>" + hosEmail + "</td>"; 
 	 
-	         output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btn btn-secondary\"></td>"      
+	         output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btnUpdate btn btn-secondary\"></td>"      
 	         				+ "<td><form method=\"post\" action=\"hospital.jsp\">"      
 	         				+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"      
 	         				+ "<input name=\"hidHospIDDelete\" type=\"hidden\" value=\"" + hosID      
@@ -134,7 +140,7 @@ public String readHosDetails()
 	 
 	   preparedStmt.setString(1, hosname);    
 	   preparedStmt.setString(2, address);   
-	   preparedStmt.setDouble(3, Integer.parseInt(contactno));    
+	   preparedStmt.setString(3, contactno);    
 	   preparedStmt.setString(4, email);    
 	   preparedStmt.setInt(5, Integer.parseInt(ID)); 
 	 
