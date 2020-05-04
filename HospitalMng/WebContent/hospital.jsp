@@ -42,12 +42,12 @@
 <title>Hospital Details</title>
 <link rel="stylesheet" href="Views/bootstrap.min.css"> 
 <script src="Components/jquery-3.4.1.min.js"></script> 
-<script src="Components/hospital.js"></script>
+<script src="Components/hospitals.js"></script>
 </head>
 <body>
 
 <h1>Hospital Management</h1>  
-	<form id="formHospital" name="formHospital" method="post" action="hospitals.jsp" > 
+	<form id="formHospital" name="formHospital" method="post" action="hospital.jsp" > 
 	  
 		Hospital Name: <input id="hosName" name="hosName" type="text" class="form-control form-control-sm"><br>   
 		Address: <input id="hosAddress" name="hosAddress" type="text" class="form-control form-control-sm"><br>   
