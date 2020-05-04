@@ -94,6 +94,7 @@ public String readHosDetails()
 	    	 String hosEmail = rs.getString("hosEmail"); 
 	     
 	 
+	    	 //Add into the html table
 	    	 output += "<tr><td><input id=\"hidHospIDUpdate\" name=\"hidHospIDUpdate\" type=\"hidden\" value=\"" 
 	                  + hosID + "\">" 
 	                  + hosName + "</td>";    
@@ -101,11 +102,20 @@ public String readHosDetails()
 	         output += "<td>" + hosContactno + "</td>";     
 	         output += "<td>" + hosEmail + "</td>"; 
 	 
+	         //button
 	         output += "<td><input name=\"btnUpdate\" type=\"button\" value=\"Update\" class=\"btnUpdate btn btn-secondary\"></td>"      
 	         				+ "<td><form method=\"post\" action=\"hospital.jsp\">"      
 	         				+ "<input name=\"btnRemove\" type=\"submit\" value=\"Remove\"class=\"btn btn-danger\">"      
 	         				+ "<input name=\"hidHospIDDelete\" type=\"hidden\" value=\"" + hosID      
-	         				+ "\">" + "</form></td></tr>";    
+	         				+ "\">" + "</form></td></tr>"; 
+	         
+	         output += "<td><input name='btnUpdate' type='button' value='Update' "
+	         		+ "class='btnUpdate btn btn-secondary'></td>"
+	         		+ "<td><input name='btnRemove' type='button'"
+	         		+ "value='Remove'"
+	         		+ "class='btnRemove btn btn-danger' data-hosid='"    
+	         		+ hosID + "'>" + "</td></tr>";
+	         
 	         } 
 	
 	     con.close(); 
