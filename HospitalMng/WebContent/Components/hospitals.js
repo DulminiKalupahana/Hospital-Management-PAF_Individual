@@ -100,10 +100,10 @@ $(document).on("click", ".btnRemove", function(event)
 		}); 
 });
 
-	function onHospDeleteComplete(response, status) 
-		{  
-			if (status == "success")  
-			{   
+function onHospDeleteComplete(response, status) 
+{  
+		if (status == "success")  
+		{   
 				var resultSet = JSON.parse(response); 
 
 
@@ -120,16 +120,16 @@ $(document).on("click", ".btnRemove", function(event)
 					$("#alertError").show();   
 				} 
 
-				} else if (status == "error")  
-				{   
-					$("#alertError").text("Error while deleting.");   
-					$("#alertError").show();  
-				} else  
-				{   
-					$("#alertError").text("Unknown error while deleting..");   
-					$("#alertError").show();  
-				}
+		} else if (status == "error")  
+		{   
+				$("#alertError").text("Error while deleting.");   
+				$("#alertError").show();  
+		} else  
+		{   
+				$("#alertError").text("Unknown error while deleting..");   
+				$("#alertError").show();  
 		}
+}
 
 
 //CLIENTMODEL

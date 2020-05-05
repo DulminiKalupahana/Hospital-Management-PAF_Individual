@@ -27,6 +27,7 @@ public class Hospital {
 	  
 	} 
 	
+	//Insert
 	public String insertHosDetails(String hosname, String address, String contactno, String email) 
 	{   
 		String output = ""; 
@@ -68,8 +69,8 @@ public class Hospital {
 	 return output;  
 	}
 	
-	
-public String readHosDetails()  
+	//Read
+	public String readHosDetails()  
 	{   
 		String output = ""; 
 	
@@ -98,7 +99,7 @@ public String readHosDetails()
 	    	 String hosEmail = rs.getString("hosEmail"); 
 	     
 	 
-	    	 
+	    	 //Add to html table
 	    	 output += "<tr><td><input id='hidHospIDUpdate' name='hidHospIDUpdate' type='hidden' value='" 
 	                  + hosID + "\'>" 
 	                  + hosName + "</td>";    
@@ -107,7 +108,7 @@ public String readHosDetails()
 	         output += "<td>" + hosEmail + "</td>"; 
 	 
 	         
-	       
+	         //Button
 	         output +=  "<td><input name='btnUpdate' type='button'  value='Update' class='btnUpdate btn btn-secondary'></td>"
 						+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-hosid='" 
 						+ hosID + "'>" + "</td></tr>";
@@ -127,6 +128,7 @@ public String readHosDetails()
 	  return output;  
 	  } 
 	
+	//Update
 	public String updateHosDetails( String ID, String hosname, String address, String contactno, String email)  
 	{   
 		String output = ""; 
@@ -167,6 +169,7 @@ public String readHosDetails()
 	  
 	}
 	
+	//Delete
 	public String deleteHosDetails(String hosID)  
 	{   
 		String output = ""; 
