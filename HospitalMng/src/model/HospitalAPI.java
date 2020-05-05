@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.HashMap; 
 import java.util.Map; 
 import java.util.Scanner; 
+import model.Hospital;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -16,6 +17,8 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet("/HospitalAPI")
 public class HospitalAPI extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	Hospital hosObj = new Hospital();
        
     /**
      * @see HttpServlet#HttpServlet()
@@ -30,8 +33,8 @@ public class HospitalAPI extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	
+		
 	}
 
 	/**
@@ -40,14 +43,13 @@ public class HospitalAPI extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		
-		Hospital hosObj = new Hospital();
 		
 		String output = hosObj.insertHosDetails(request.getParameter("hosName"),      
-				request.getParameter("hosAddress"),     
-				request.getParameter("hosContactno"),       
-				request.getParameter("hosEmail")); 
+												request.getParameter("hosAddress"),     
+												request.getParameter("hosContactno"),       
+												request.getParameter("hosEmail")); 
 		 
-		 response.getWriter().write(output);
+		response.getWriter().write(output);
 	}
 
 	/**
@@ -56,28 +58,28 @@ public class HospitalAPI extends HttpServlet {
 	protected void doPut(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		Map paras = getParasMap(request); 
-		Hospital hosObj = new Hospital();
 		 
-		 String output = hosObj.updateHosDetails(paras.get("hidHospIDSave").toString(),     
-				 paras.get("hosName").toString(),     
-				 paras.get("hosAddress").toString(),        
-				 paras.get("hosContactno").toString(),        
-				 paras.get("hosEmail").toString()); 
+		String output = hosObj.updateHosDetails(paras.get("hidHospIDSave").toString(),     
+				 								paras.get("hosName").toString(),     
+				 								paras.get("hosAddress").toString(),        
+				 								paras.get("hosContactno").toString(),        
+				 								paras.get("hosEmail").toString()); 
 		 
 		 response.getWriter().write(output);
 	}
+	
 
 	/**
 	 * @see HttpServlet#doDelete(HttpServletRequest, HttpServletResponse)
 	 */
-	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
+	protected void doDelete(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
+	{
+	
 		Map paras = getParasMap(request); 
-		Hospital hosObj = new Hospital();
 		 
-		 String output = hosObj.deleteHosDetails(paras.get("hosID").toString()); 
+		String output = hosObj.deleteHosDetails(paras.get("hosID").toString()); 
 		 
-		 response.getWriter().write(output);
+		response.getWriter().write(output);
 	}
 	
 	
@@ -106,5 +108,8 @@ public class HospitalAPI extends HttpServlet {
 		return map; 
 		
 	}
+	
+	
+	
 
 }

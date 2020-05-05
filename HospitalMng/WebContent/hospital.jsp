@@ -17,12 +17,12 @@
 		<div class="col-6">
 
 <h1>Hospital Details</h1>  
-	<form id="formHospital" name="formHospital"> 
+	<form id="formHospital" name="formHospital" > 
 	  
-		Hospital Name: 	<input id="hosName" name="hosName" type="text" class="form-control form-control-sm"><br>   
-		Address: 	   	<input id="hosAddress" name="hosAddress" type="text" class="form-control form-control-sm"><br>   
-		Contact No: 	<input id="hosContactno" name="hosContactno" type="text" class="form-control form-control-sm"><br>   
-		Email: 			<input id="hosEmail" name="hosEmail" type="text" class="form-control form-control-sm"><br>
+		Hospital Name:<input id="hosName" name="hosName" type="text" class="form-control form-control-sm"><br>   
+		Address: <input id="hosAddress" name="hosAddress" type="text" class="form-control form-control-sm"><br>   
+		Contact No:<input id="hosContactno" name="hosContactno" type="text" class="form-control form-control-sm"><br>   
+		Email:<input id="hosEmail" name="hosEmail" type="text" class="form-control form-control-sm"><br>
 		
 		  
 		<input id="btnSave" name="btnSave" type="button" value="Save" class="btn btn-primary">
@@ -30,7 +30,8 @@
 	</form>  
 	
 		
-			<div id="alertSuccess"  class="alert alert-success"></div>
+			<div id="alertSuccess"  class="alert alert-success">
+			</div>
 			<div id ="alertError" class="alert alert-danger"></div>
 	
 		<br>

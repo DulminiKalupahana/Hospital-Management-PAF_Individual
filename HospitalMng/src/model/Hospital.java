@@ -1,6 +1,9 @@
 package model;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Hospital {
 
@@ -27,13 +30,15 @@ public class Hospital {
 	public String insertHosDetails(String hosname, String address, String contactno, String email) 
 	{   
 		String output = ""; 
+		
 	 try   
 	  {    
 		  Connection con = connect(); 
 	 
 	   if (con == null)   
 	   {
-		   return "Error while connecting to the database for inserting."; } 
+		   return "Error while connecting to the database for inserting."; 
+	   } 
 	 
 	      String query = " insert into hospitaldetails (`hosID`,`hosName`,`hosAddress`,`hosContactno`,`hosEmail`)"     
 	    		  + " values (?, ?, ?, ?, ?)"; 
@@ -51,8 +56,7 @@ public class Hospital {
 	      con.close(); 
 	 
 	      String newHosDetails = readHosDetails();    
-	      output = "{\"status\":\"success\", \"data\": \"" +       
-	    		  newHosDetails + "\"}";
+	      output = "{\"status\":\"success\", \"data\": \"" +   newHosDetails + "\"}";
 	   
 	  }catch (Exception e)   
 	  	
@@ -68,7 +72,7 @@ public class Hospital {
 public String readHosDetails()  
 	{   
 		String output = ""; 
-
+	
 		try   
 		{   
 			Connection con = connect(); 
@@ -78,16 +82,9 @@ public String readHosDetails()
 				return "Error while connecting to the database for reading."; 
 			} 
 			
+			output = "<table border=\'1\'><tr><th>Hospital Name</th><th>Address</th><th>Contact Number</th><th>Email</th> <th>Update</th><th>Remove</th></tr>"; 
 	 
-	     output = "<table border=\"1\"><tr>"
-	     		+ "<th>Hospital Name</th>"
-	     		+ "<th>Address</th>"
-	     		+ "<th>Contact No</th>"
-	     		+ "<th>Email</th>"
-	     		+ "<th>Update</th>"
-	     		+ "<th>Remove</th></tr>"; 
-	 
-	   
+
 	     String query = "select * from hospitaldetails";    
 	     java.sql.Statement stmt = con.createStatement();    
 	     ResultSet rs = stmt.executeQuery(query); 
@@ -101,22 +98,19 @@ public String readHosDetails()
 	    	 String hosEmail = rs.getString("hosEmail"); 
 	     
 	 
-	    	 //Add into the html table
-	    	 output += "<tr><td><input id=\"hidHospIDUpdate\" name=\"hidHospIDUpdate\" type=\"hidden\" value=\"" 
-	                  + hosID + "\">" 
+	    	 
+	    	 output += "<tr><td><input id='hidHospIDUpdate' name='hidHospIDUpdate' type='hidden' value='" 
+	                  + hosID + "\'>" 
 	                  + hosName + "</td>";    
 	         output += "<td>" + hosAddress + "</td>";     
 	         output += "<td>" + hosContactno + "</td>";     
 	         output += "<td>" + hosEmail + "</td>"; 
 	 
-	         //button
+	         
 	       
-	          output += "<td><input name='btnUpdate' type='button' value='Update' "
-	         		+ "class='btnUpdate btn btn-secondary'></td>"
-	         		+ "<td><input name='btnRemove' type='button'"
-	         		+ "value='Remove'"
-	         		+ "class='btnRemove btn btn-danger' data-hosid='"    
-	         		+ hosID + "'>" + "</td></tr>";
+	         output +=  "<td><input name='btnUpdate' type='button'  value='Update' class='btnUpdate btn btn-secondary'></td>"
+						+ "<td><input name='btnRemove' type='button' value='Remove' class='btnRemove btn btn-danger' data-hosid='" 
+						+ hosID + "'>" + "</td></tr>";
 	         
 	         } 
 	
@@ -160,13 +154,11 @@ public String readHosDetails()
 	   con.close(); 
 	 
 	   String newHosDetails = readHosDetails();    
-	   output = "{\"status\":\"success\", \"data\": \"" +        
-	   newHosDetails + "\"}";  
+	   output = "{\"status\":\"success\", \"data\": \"" + newHosDetails + "\"}";  
 	}   
 		catch (Exception e)   
 	{    
-			output = "{\"status\":\"error\", \"data\":"
-					+ " \"Error while updating the hospital details.\"}";    
+			output = "{\"status\":\"error\", \"data\": \"Error while updating the hospital details.\"}";    
 			System.err.println(e.getMessage());   
 			
 	} 
@@ -185,11 +177,11 @@ public String readHosDetails()
 	 
 	   if (con == null)    
 	   {
-		   return "Error while connecting to the database for deleting."; } 
+		   return "Error while connecting to the database for deleting."; 
+	   	} 
 	 
 	   String query = "delete from hospitaldetails where hosID=?"; 
-	 
-	   PreparedStatement preparedStmt = con.prepareStatement(query); 
+	   java.sql.PreparedStatement preparedStmt = con.prepareStatement(query);
 	 
 	   preparedStmt.setInt(1, Integer.parseInt(hosID)); 
 	 
@@ -197,14 +189,12 @@ public String readHosDetails()
 	   con.close(); 
 	 
 	   String newHosDetails = readHosDetails();    
-	   output = "{\"status\":\"success\", \"data\": \"" +        
-			   newHosDetails + "\"}";
+	   output = "{\"status\":\"success\", \"data\": \"" + newHosDetails + "\"}";
 	   
 	  }   
 	  catch (Exception e)   
 	  {    
-		  output = "{\"status\":\"error\", \"data\":"
-		  		+ " \"Error while deleting the hospital details.\"}";    
+		  output = "{\"status\":\"error\", \"data\": \"Error while deleting.\"}";    
 		  System.err.println(e.getMessage());  
 	  } 
 	 

@@ -1,12 +1,8 @@
 $(document).ready(function()
-{  
-	if ($("#alertSuccess").text().trim() == "") 
-	{   
-		$("#alertSuccess").hide();  
-	}  
+{
+	$("#alertSuccess").hide();
 	$("#alertError").hide();
-}); 
-
+});
 
 $(document).on("click", "#btnSave", function(event) 
 {  
@@ -22,8 +18,21 @@ $(document).on("click", "#btnSave", function(event)
 		 $("#alertError").show();   
 		 return;  
 	 } 
-	 
-	 $("#formHospital").submit();
+
+	 var type = ($("#hidHospIDSave").val() == "") ? "POST" : "PUT"; 
+
+	 $.ajax( 
+	 {  
+	 	url : "HospitalAPI",  
+	 	type : type,  
+	 	data : $("#formHospital").serialize(),  
+	 	dataType : "text",  
+	 	complete : function(response, status)  
+	 	{   
+	 		onHospSaveComplete(response.responseText, status);  
+	 	} 
+	 }); 
+
 }); 
 
 
@@ -35,7 +44,53 @@ $(document).on("click", ".btnUpdate", function(event)
 	$("#hosContactno").val($(this).closest("tr").find('td:eq(2)').text());
 	$("#hosEmail").val($(this).closest("tr").find('td:eq(3)').text()); 
 	
-}); 
+});
+
+$(document).on("click", ".btnRemove", function(event) 
+		{  
+			$.ajax(  
+					{   
+						url : "HospitalAPI",   
+						type : "DELETE",   
+						data : "hosID=" + $(this).data("hosid"),   
+						dataType : "text",   
+						complete : function(response, status)   
+						{    
+							onHospDeleteComplete(response.responseText, status);   
+						}  
+		}); 
+});
+
+	function onHospDeleteComplete(response, status) 
+		{  
+			if (status == "success")  
+			{   
+				var resultSet = JSON.parse(response); 
+
+
+				if (resultSet.status.trim() == "success")   
+				{    
+					$("#alertSuccess").text("Successfully deleted.");    
+					$("#alertSuccess").show(); 
+
+		 
+					$("#divHospGrid").html(resultSet.data);   
+				} else if (resultSet.status.trim() == "error")   
+				{    
+					$("#alertError").text(resultSet.data);    
+					$("#alertError").show();   
+				} 
+
+				} else if (status == "error")  
+				{   
+					$("#alertError").text("Error while deleting.");   
+					$("#alertError").show();  
+				} else  
+				{   
+					$("#alertError").text("Unknown error while deleting..");   
+					$("#alertError").show();  
+				}
+		}
 
 
 function validateHosForm()
@@ -55,18 +110,47 @@ function validateHosForm()
 		return "Insert Contact No."; 
 	} 
 	 
-	/* var tmpCN = $("#hosContactno").val().trim(); 
-	 if (!$.isNumeric(tmpCN))  
-	 {  
-		 return "Insert a numerical value for Contact No.";  
-	 } 
-	 
-	  $("#hosContactno").val(parseFloat(tmpCN).toFixed(2)); */
-	 
-	 if ($("#hosEmail").val().trim() == "") 
-	 {   
+	if ($("#hosEmail").val().trim() == "") 
+	{   
 		 return "Insert Email."; 
-	 } 
+	} 
 	 
 	 return true; 
 } 
+
+
+function onHospSaveComplete(response, status) 
+{  
+	if (status == "success")  
+	{   
+		var resultSet = JSON.parse(response); 
+
+		if (resultSet.status.trim() == "success")   
+		{    
+			$("#alertSuccess").text("Successfully saved.");    
+			$("#alertSuccess").show(); 
+
+			$("#divHospGrid").html(resultSet.data);   
+		} else if (resultSet.status.trim() == "error")   
+		{    
+			$("#alertError").text(resultSet.data);    
+			$("#alertError").show();   } 
+
+	} else if (status == "error")  
+	{   
+		$("#alertError").text("Error while saving.");   
+		$("#alertError").show();  
+	} else  
+	{   
+		$("#alertError").text("Unknown error while saving..");   
+		$("#alertError").show();  
+	} 
+
+	$("#hidHospIDSave").val("");  
+	$("#formHospital")[0].reset(); 
+}
+
+
+
+
+
